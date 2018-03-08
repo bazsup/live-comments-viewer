@@ -1,8 +1,9 @@
 <template>
   <div>
     <button
+      :disabled="loading"
       @click="refresh"
-      :disabled="loading" >
+    >
       Refresh
     </button>
     <ul v-if="!loading">
