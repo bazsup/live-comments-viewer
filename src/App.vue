@@ -16,32 +16,18 @@
 
 <script>
 /* global FB */
-import HelloWorld from './components/HelloWorld.vue'
 import LiveCommentsViewer from './components/LiveCommentViewer'
 
 export default {
-  name: 'app',
+  name: 'App',
+  components: {
+    LiveCommentsViewer
+  },
   data: () => ({
     authStatus: 'checking', // checking, connected, notAuthorized
     authResponse: null
   }),
-  methods: {
-    async signIn() {
-      const result = await new Promise(resolve => {
-        FB.login(resolve, { scope: 'user_videos' })
-      })
-      console.log('Login result', result)
-    },
-    onAuthResponseChange ({ authResponse }) { // extract authResponse from event
-      console.log('onAuthResponseChange', authResponse && authResponse.userID)
-      
-    },
-    onStatusChange ({ status }) {
-      console.log('onStatusChange', status)
-      this.authStatus = status
-    }
-  },
-  async created () {// ถูกรันครั้งเดียว
+  async created () { // ถูกรันครั้งเดียว
     const FB = await window.facebookSDKPromise
     FB.Event.subscribe(
       'auth.authResponseChange',
@@ -56,11 +42,21 @@ export default {
       this.onAuthResponseChange(res)
       this.onStatusChange(res)
     })
-
   },
-  components: {
-    HelloWorld,
-    LiveCommentsViewer
+  methods: {
+    async signIn () {
+      const result = await new Promise(resolve => {
+        FB.login(resolve, { scope: 'user_videos' })
+      })
+      console.log('Login result', result)
+    },
+    onAuthResponseChange ({ authResponse }) { // extract authResponse from event
+      console.log('onAuthResponseChange', authResponse && authResponse.userID)
+    },
+    onStatusChange ({ status }) {
+      console.log('onStatusChange', status)
+      this.authStatus = status
+    }
   }
 }
 </script>

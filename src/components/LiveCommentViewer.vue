@@ -1,6 +1,8 @@
 <template>
   <ul>
-    <li v-for="comment in comments" :key="comment.id">
+    <li
+      v-for="comment in comments"
+      :key="comment.id">
       <strong>{{ comment.from.name }}</strong>
       {{ comment.message }}
     </li>
@@ -14,28 +16,26 @@ export default {
     loading: true,
     comments: [ ]
   }),
+  created () {
+    this.fetchComments()
+  },
   methods: {
-    async fetchComments() {
+    async fetchComments () {
       this.loading = true
       try {
         const commentsResponse = await new Promise(resolve => {
-          FB.api('/video-id/comments', {
+          FB.api('/1465763256804241/comments', {
             order: 'reverse_chronological',
             live_filter: 'no_filter',
             filter: 'stream'
           }, resolve)
         })
+        console.log(commentsResponse)
         this.comments = commentsResponse.data
       } finally {
         this.loading = false
       }
     }
-  },
-  created () {
-    this.comments = [ { from: { name: 'Bas' }, message: 'helloworld' },
-                      { from: { name: 'Bas2' }, message: 'test' }
-                    ]
-    // this.fetchComments()
   }
 }
 </script>
@@ -43,5 +43,3 @@ export default {
 <style scoped>
 
 </style>
-
-
