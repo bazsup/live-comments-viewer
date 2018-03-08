@@ -1,12 +1,19 @@
 <template>
-  <ul>
-    <li
-      v-for="comment in comments"
-      :key="comment.id">
-      <strong>{{ comment.from.name }}</strong>
-      {{ comment.message }}
-    </li>
-  </ul>
+  <div>
+    <button
+      @click="refresh"
+      :disabled="loading" >
+      Refresh
+    </button>
+    <ul v-if="!loading">
+      <li
+        v-for="comment in comments"
+        :key="comment.id">
+        <strong>{{ comment.from.name }}</strong>
+        {{ comment.message }}
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
@@ -19,7 +26,13 @@ export default {
   created () {
     this.fetchComments()
   },
+  beforeDestroy () {
+    /* ignore this cycle */
+  },
   methods: {
+    refresh () {
+      this.fetchComments()
+    },
     async fetchComments () {
       this.loading = true
       try {
