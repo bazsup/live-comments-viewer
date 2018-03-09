@@ -3,23 +3,19 @@
     <button
       :disabled="loading"
       class="button"
-      @click="refresh"
-    >
+      @click="refresh">
       Refresh
     </button>
+    <p><b><u>NOTE:</u></b> Click on a comment to view it in full screen</p>
     <ul v-if="!loading">
       <li
         v-for="comment in comments"
         :key="comment.id"
-        class="level"
+        @click="fullscreen($event.currentTarget)"
       >
-        <div class="level-left">
-          <strong>{{ comment.from.name }}</strong>&nbsp;
-          {{ comment.message }}
-        </div>
-        <div class="level-right">
-          <small>{{ time(comment.created_time) }}</small>
-        </div>
+        <strong>{{ comment.from.name }}</strong>
+        {{ comment.message }}
+        <small>{{ time(comment.created_time) }}</small>
       </li>
     </ul>
   </div>
@@ -38,7 +34,7 @@ export default {
   },
   data: () => ({
     loading: true,
-    comments: [ ]
+    comments: []
   }),
   created () {
     this.fetchComments()
@@ -53,6 +49,9 @@ export default {
   methods: {
     refresh () {
       this.fetchComments()
+    },
+    fullscreen (el) {
+      el.webkitRequestFullscreen()
     },
     time (time) {
       return moment(time).format('DD MMM YYYY, hh:mm:ss a')
@@ -82,23 +81,37 @@ export default {
     border: 1px solid #eee;
     margin: 1em 0;
   }
+
   li:not(:first-child) {
     border-top: 1px solid #eee;
   }
+
   li {
     padding: 0.5em;
   }
+
   li:fullscreen {
-    font-size: 100px;
+    font-size: 70px;
     background: black;
     color: #e9e8e7;
     border: 0;
     text-align: center;
   }
+
   li:fullscreen strong {
     color: #bef;
     display: block;
   }
+
+  li:fullscreen small {
+    color: #bef;
+    display: none;
+  }
+
+  li small {
+    float: right;
+  }
+
   .level {
     margin-bottom: 0;
   }
