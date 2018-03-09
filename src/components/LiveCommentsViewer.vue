@@ -6,6 +6,12 @@
       @click="refresh">
       Refresh
     </button>
+    <button
+      @click="logout"
+      class="button is-danger is-outlined"
+      style="margin-left: 10px;"
+    >logout
+    </button>
     <p><b><u>NOTE:</u></b> Click on a comment to view it in full screen</p>
     <ul v-if="!loading">
       <li
@@ -49,6 +55,9 @@ export default {
   methods: {
     refresh () {
       this.fetchComments()
+    },
+    logout () {
+      FB.logout()
     },
     fullscreen (el) {
       el.webkitRequestFullscreen()
