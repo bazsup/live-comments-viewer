@@ -20,14 +20,25 @@
 <script>
 /* global FB */
 export default {
+  props: {
+    videoId: {
+      type: String,
+      required: true
+    }
+  },
   data: () => ({
     loading: true,
     comments: [ ]
   }),
   created () {
     this.fetchComments()
+    this.refreshInterval = setInterval(
+      () => this.fetchComments(),
+      15000
+    )
   },
   beforeDestroy () {
+    clearInterval(this.refreshInterval)
     /* ignore this cycle */
   },
   methods: {
@@ -38,7 +49,7 @@ export default {
       this.loading = true
       try {
         const commentsResponse = await new Promise(resolve => {
-          FB.api('/1465763256804241/comments', {
+          FB.api(`/${this.videoId}/comments`, {
             order: 'reverse_chronological',
             live_filter: 'no_filter',
             filter: 'stream'

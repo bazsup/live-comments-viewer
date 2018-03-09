@@ -1,11 +1,11 @@
 <template>
-  <div id="app">
+  <div id="App">
     <h1>live-comment-viewer</h1>
     <div v-if="authStatus === 'checking'">
       Checking login status...
     </div>
     <div v-if="authStatus === 'connected'">
-      <live-comments-viewer />
+      <router-view />
     </div>
     <div v-if="['not_authorized', 'unknown'].includes(authStatus)">
       <button @click="signIn">Sign in with Facebook</button>
@@ -16,13 +16,9 @@
 
 <script>
 /* global FB */
-import LiveCommentsViewer from './components/LiveCommentViewer'
 
 export default {
   name: 'App',
-  components: {
-    LiveCommentsViewer
-  },
   data: () => ({
     authStatus: 'checking', // checking, connected, notAuthorized
     authResponse: null
