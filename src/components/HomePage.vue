@@ -1,14 +1,27 @@
 <template lang="html">
   <form @submit="submit($event)">
-    <h2>Please enter your Video ID:</h2>
-    <input
-      v-model="videoUrl"
-      type="text"
-      placeholder="https://www.facebook.com/yourname/videos/___"
-      size="50">
-    <input
-      type="submit"
-      value="View comments" >
+    <h2 class="title is-5">Please enter your Video ID:</h2>
+    <div class="field">
+      <p class="control">
+        <input
+          v-model="videoUrl"
+          class="input"
+          type="text"
+          placeholder="https://www.facebook.com/yourname/videos/___"
+          size="50"
+        >
+      </p>
+    </div>
+    <div class="field">
+      <p class="control">
+        <input
+          class="button is-primary"
+          type="submit"
+          value="View comments"
+        >
+      </p>
+    </div>
+
     <p>This only works with your own videos, or videos posted by pages.</p>
   </form>
 </template>

@@ -1,16 +1,21 @@
 <template>
-  <div id="App">
-    <h1>live-comment-viewer</h1>
-    <div v-if="authStatus === 'checking'">
-      Checking login status...
+  <div class="section">
+    <div class="container">
+      <h1 class="title is-3">live-comment-viewer</h1>
+      <div v-if="authStatus === 'checking'">
+        Checking login status...
+      </div>
+      <div v-if="authStatus === 'connected'">
+        <router-view />
+      </div>
+      <div v-if="['not_authorized', 'unknown'].includes(authStatus)">
+        <button
+          class="button is-link"
+          @click="signIn"
+        >Sign in with Facebook
+        </button>
+      </div>
     </div>
-    <div v-if="authStatus === 'connected'">
-      <router-view />
-    </div>
-    <div v-if="['not_authorized', 'unknown'].includes(authStatus)">
-      <button @click="signIn">Sign in with Facebook</button>
-    </div>
-
   </div>
 </template>
 
@@ -58,4 +63,7 @@ export default {
 </script>
 
 <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    }
 </style>
