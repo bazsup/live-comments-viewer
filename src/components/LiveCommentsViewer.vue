@@ -56,13 +56,13 @@ export default {
   }),
   created () {
     this.fetchComments()
-    // this.refreshInterval = setInterval(
-    //   () => this.fetchComments(),
-    //   15000
-    // )
+    this.refreshInterval = setInterval(
+      () => this.fetchComments(),
+      15000
+    )
   },
   beforeDestroy () {
-    // clearInterval(this.refreshInterval)
+    clearInterval(this.refreshInterval)
   },
   methods: {
     refresh () {

@@ -6,7 +6,7 @@
         Checking login status...
       </div>
       <div v-if="authStatus === 'connected'">
-        <router-view />
+        <router-view :id="id"/>
       </div>
       <div v-if="['not_authorized', 'unknown'].includes(authStatus)">
         <button
@@ -26,7 +26,8 @@ export default {
   name: 'App',
   data: () => ({
     authStatus: 'checking', // checking, connected, notAuthorized
-    authResponse: null
+    authResponse: null,
+    id: null
   }),
   async created () { // ถูกรันครั้งเดียว
     const FB = await window.facebookSDKPromise
@@ -52,6 +53,7 @@ export default {
       console.log('Login result', result)
     },
     onAuthResponseChange ({ authResponse }) { // extract authResponse from event
+      this.id = authResponse.userID
       console.log('onAuthResponseChange', authResponse && authResponse.userID)
     },
     onStatusChange ({ status }) {
