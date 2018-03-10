@@ -19,9 +19,21 @@
         :key="comment.id"
         @click="fullscreen($event.currentTarget)"
       >
-        <strong>{{ comment.from.name }}</strong>
-        {{ comment.message }}
-        <small>{{ time(comment.created_time) }}</small>
+        <div class="inline">
+          <strong v-if="getName(comment)">
+            {{ comment.from.name }}
+          </strong>
+          <span
+          >{{ comment.message }}</span>
+        </div>
+        <div class="right">
+          <a
+            :href="'https://facebook.com/' + comment.id"
+            target="_blank"
+            class="button is-outlined is-link is-small"
+          >link to comment</a>&nbsp;
+          <small>{{ time(comment.created_time) }}</small>
+        </div>
       </li>
     </ul>
   </div>
@@ -44,17 +56,20 @@ export default {
   }),
   created () {
     this.fetchComments()
-    this.refreshInterval = setInterval(
-      () => this.fetchComments(),
-      15000
-    )
+    // this.refreshInterval = setInterval(
+    //   () => this.fetchComments(),
+    //   15000
+    // )
   },
   beforeDestroy () {
-    clearInterval(this.refreshInterval)
+    // clearInterval(this.refreshInterval)
   },
   methods: {
     refresh () {
       this.fetchComments()
+    },
+    getName (comment) {
+      return comment.from && comment.from.name
     },
     logout () {
       FB.logout()
@@ -97,6 +112,7 @@ export default {
 
   li {
     padding: 0.5em;
+    clear: both;
   }
 
   li:fullscreen {
@@ -112,16 +128,18 @@ export default {
     display: block;
   }
 
-  li:fullscreen small {
+  li:fullscreen .right {
     color: #bef;
     display: none;
   }
 
-  li small {
+  .right {
     float: right;
+    position: relative;
+    z-index: 2;
   }
 
-  .level {
-    margin-bottom: 0;
+  .inline {
+    display: inline-block;
   }
 </style>
