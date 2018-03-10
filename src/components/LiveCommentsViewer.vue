@@ -7,9 +7,9 @@
       Refresh
     </button>
     <button
-      @click="logout"
-      class="button is-danger is-outlined"
       style="margin-left: 10px;"
+      class="button is-danger is-outlined"
+      @click="logout"
     >logout
     </button>
     <p><b><u>NOTE:</u></b> Click on a comment to view it in full screen</p>
