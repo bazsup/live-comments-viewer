@@ -32,8 +32,11 @@
             target="_blank"
             class="button is-outlined is-link is-small"
           >link to comment</a>&nbsp;
-          <small>{{ time(comment.created_time) }}</small>
+          <small>
+            {{ time(comment.created_time) }}
+          </small>
         </div>
+        <span class="clear-float" />
       </li>
     </ul>
   </div>
@@ -138,8 +141,11 @@ export default {
     position: relative;
     z-index: 2;
   }
-
   .inline {
     display: inline-block;
+  }
+  .clear-float {
+    clear: both;
+    display:block;
   }
 </style>
